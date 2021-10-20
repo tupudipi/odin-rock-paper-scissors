@@ -1,108 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Rock Paper Scissors</title>
 </head>
+
 <body>
-    
+
+    <main>
+        <div class="buttons">
+            <h2>Player picks</h2>
+            <button id="rock">ROCK</button>
+            <button id="paper"=>PAPER</button>
+            <button id="scissors">SCISSORS</button>
+        </div>
+
+        <div class="score">
+            <h2>SCORE:</h2>
+            <p id="playerScore">Player: 0</p>
+            <p id="computerScore">Computer: 0</p>
+        </div>
+
+        <div class="computer-buttons">
+            <h2>Computer picks</h2>
+            <button id="rock">ROCK</button>
+            <button id="paper"=>PAPER</button>
+            <button id="scissors">SCISSORS</button>
+        </div>
+    </main>
+
+    <div class="round-results">
+            <p id="round-text">
+
+            </p>
+    </div>
+
+
 </body>
 
 <script>
-    function computerPlay(){
+    function computerPlay() {
         let array = ['Rock', 'Paper', 'Scissors'];
         let random = Math.floor(Math.random() * array.length);
         return array[random];
     }
+    let playerScore = 0, computerScore = 0;
 
-    function playRound(){
+    function playRound(e) {
         let computerSelection = computerPlay();
         computerSelection = computerSelection.toLowerCase();
-        console.log(computerSelection);
 
-        let playerSelection = prompt(`Rock, Paper, or Scissors 
-Pick one!`);
-        playerSelection = playerSelection.toLowerCase();
+        let playerSelection = e.target.id;
 
-        if(playerSelection == "rock")
-            switch(computerSelection){
+        let p = document.getElementById("round-text");
+
+        if (playerSelection == "rock")
+            switch (computerSelection) {
                 case "rock":
-                    return `You picked ${playerSelection}, computer picked ${computerSelection}
+                    p.textContent = `You picked ${playerSelection}, computer picked ${computerSelection}
                             It's a tie!`;
                     break;
-                case "paper": 
+                case "paper":
                     computerScore++;
-                    return `You picked ${playerSelection}, computer picked ${computerSelection}
+                    p.textContent = `You picked ${playerSelection}, computer picked ${computerSelection}
                             You lose this round!`;
                     break;
-                case "scissors": 
+                case "scissors":
                     playerScore++;
-                    return `You picked ${playerSelection}, computer picked ${computerSelection}
+                    p.textContent = `You picked ${playerSelection}, computer picked ${computerSelection}
                             You win this round!`;
                     break;
             }
-        else if(playerSelection == "paper")
-            switch(computerSelection){
+        else if (playerSelection == "paper")
+            switch (computerSelection) {
                 case "rock":
                     playerScore++;
-                    return `You picked ${playerSelection}, computer picked ${computerSelection}
+                    p.textContent = `You picked ${playerSelection}, computer picked ${computerSelection}
                             You win this round!`;
                     break;
-                case "paper": 
-                    return `You picked ${playerSelection}, computer picked ${computerSelection}
+                case "paper":
+                    p.textContent = `You picked ${playerSelection}, computer picked ${computerSelection}
                             It's a tie!`;
                     break;
                 case "scissors":
-                    computerScore++; 
-                    return `You picked ${playerSelection}, computer picked ${computerSelection}
+                    computerScore++;
+                    p.textContent = `You picked ${playerSelection}, computer picked ${computerSelection}
                             You lose this round!`;
                     break;
             }
-        else if(playerSelection == "scissors")
-            switch(computerSelection){
+        else if (playerSelection == "scissors")
+            switch (computerSelection) {
                 case "rock":
                     computerScore++;
-                    return `You picked ${playerSelection}, computer picked ${computerSelection}
+                    p.textContent = `You picked ${playerSelection}, computer picked ${computerSelection}
                             You lose this round!`;
                     break;
-                case "paper": 
+                case "paper":
                     playerScore++;
-                    return `You picked ${playerSelection}, computer picked ${computerSelection}
+                    p.textContent = `You picked ${playerSelection}, computer picked ${computerSelection}
                             You win this round!`;
                     break;
-                case "scissors": 
-                    return `You picked ${playerSelection}, computer picked ${computerSelection}
+                case "scissors":
+                    p.textContent = `You picked ${playerSelection}, computer picked ${computerSelection}
                             It's a tie!`;
                     break;
             }
-        else{
-            return "Please pick one of the three options!"
+        const results = document.querySelector(".round-results");
+        results.appendChild(p);
+
+        document.getElementById("playerScore").innerHTML = `Player: ${playerScore}`;
+        document.getElementById("computerScore").innerHTML = `Computer: ${computerScore}`;
+
+        let pWon = document.createElement("h1");
+        let computerWon = document.createElement("h1");
+
+        if(playerScore == 5)
+        {
+            pWon.textContent = "WOOOOOO YOU WON!"
+            results.replaceChild(pWon, p);
+        }
+        if(computerScore == 5)
+        {
+            computerWon.textContent = "Oof, you lost. Better luck next time!"
+            results.replaceChild(computerWon, p);
         }
     }
 
-    let playerScore = 0, computerScore = 0;
-
-    function game(){
-        for (let roundsPlayed = 0; roundsPlayed <5; roundsPlayed++){
-            alert(playRound());
-        }
-        if (playerScore > computerScore)
-            alert(`YOU WON!!!
-Your score: ${playerScore}
-Computer score: ${computerScore}`);
-        else if (playerScore < computerScore)
-            alert(`Oof, you lost! Better Luck next time!
-Your score: ${playerScore}
-Computer score: ${computerScore}`);
-        else if (playerScore == computerScore)
-            alert(`It's a tie!
-Your score: ${playerScore}
-Computer score: ${computerScore}`);
-    }
-
-    game();
-
+    const buttons = Array.from(document.querySelectorAll("button"));
+    buttons.forEach(button => button.addEventListener('click', playRound));
 </script>
+
 </html>
