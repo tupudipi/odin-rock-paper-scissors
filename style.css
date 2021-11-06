@@ -1,6 +1,6 @@
 *{
     font-family: sans-serif;
-
+    box-sizing: border-box;
 }
 
 body{
@@ -10,6 +10,7 @@ body{
     height: 100vh;
     text-align: center;
     background-color: whitesmoke;
+    overflow: hidden;
 }
 
 .title{
@@ -66,7 +67,6 @@ button.selected{
     width: 200px;
     aspect-ratio: 2/1;
     margin: 50px;
-    border-color: gold;
 }
 
 .computer-buttons > * {
