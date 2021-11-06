@@ -56,6 +56,12 @@ button{
     border-radius: 16px;
 }
 
+button.selected{
+    transform: scale(1.175);
+    transition-duration: 80ms;
+    transition-timing-function: ease-in-out;
+}
+
 .restart-button{
     width: 200px;
     aspect-ratio: 2/1;

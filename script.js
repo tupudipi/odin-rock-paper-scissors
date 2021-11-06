@@ -1,5 +1,5 @@
-const buttons = Array.from(document.querySelectorAll(".player-buttons > *"));
-buttons.forEach(button => button.addEventListener('click', playRound));
+const playerButtons = Array.from(document.querySelectorAll(".player-buttons > *"));
+playerButtons.forEach(button => button.addEventListener('click', playRound));
 
 const playerPickTag = document.getElementsByClassName('player-pick')[0];
 const computerPickTag = document.getElementsByClassName('computer-pick')[0];
@@ -17,7 +17,7 @@ function showRestartButton() {
 }
 
 function restartGame(){
-    buttons.forEach(button => button.disabled = false);
+    playerButtons.forEach(button => button.disabled = false);
     playerPickTag.textContent = '-';
     computerPickTag.textContent = '-';
     roundResultTag.textContent = '';
@@ -82,8 +82,16 @@ function decideRound(player, computer){
 }
 
 function playRound(e) {
+    let allButtons = Array.from(document.getElementsByTagName('button'));
+    allButtons.forEach(button => button.classList = '');
+
     let computerPick = computerPlay();
     let playerPick = playerPlay(e);
+
+    let computerPickButton = document.getElementById(`computer-${computerPick}`);
+    let playerPickButton = document.getElementById(`player-${playerPick}`);
+    playerPickButton.classList += 'selected';
+    computerPickButton.classList += 'selected';
 
     playerPickTag.textContent = playerPick;
     computerPickTag.textContent = computerPick;
@@ -92,12 +100,13 @@ function playRound(e) {
 
     if(playerScoreTag.textContent == 5){
         roundResultTag.textContent = "You won!";
-        buttons.forEach(button => button.disabled = true);
+        playerButtons.forEach(button => button.disabled = true);
         showRestartButton();
     } 
     else if (computerScoreTag.textContent == 5) {
         roundResultTag.textContent = "You lost! :(";
-        buttons.forEach(button => button.disabled = true);
+        playerButtons.forEach(button => button.disabled = true);
         showRestartButton();
     }
 }
+
