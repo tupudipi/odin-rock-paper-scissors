@@ -1,13 +1,13 @@
 const playerButtons = Array.from(document.querySelectorAll(".player-buttons > *"));
 playerButtons.forEach(button => button.addEventListener('click', playRound));
-
+const allButtons = Array.from(document.getElementsByTagName('button'));
 const playerPickTag = document.getElementsByClassName('player-pick')[0];
 const computerPickTag = document.getElementsByClassName('computer-pick')[0];
 const roundResultTag = document.getElementsByClassName('round-result')[0];
 const playerScoreTag = document.getElementById('player-score');
 const computerScoreTag = document.getElementById('computer-score');
 const restartTag = document.getElementsByClassName('restart')[0];
-let restartButton = document.createElement('button');
+const restartButton = document.createElement('button');
 
 function showRestartButton() {
     restartButton.textContent = 'restart';
@@ -18,6 +18,7 @@ function showRestartButton() {
 
 function restartGame(){
     playerButtons.forEach(button => button.disabled = false);
+    allButtons.forEach(button => button.classList = '');
     playerPickTag.textContent = '-';
     computerPickTag.textContent = '-';
     roundResultTag.textContent = '';
@@ -82,7 +83,6 @@ function decideRound(player, computer){
 }
 
 function playRound(e) {
-    let allButtons = Array.from(document.getElementsByTagName('button'));
     allButtons.forEach(button => button.classList = '');
 
     let computerPick = computerPlay();
