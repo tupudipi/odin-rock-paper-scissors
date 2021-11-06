@@ -31,12 +31,20 @@ body{
     gap: 64px;
 }
 
+.round-picks > * {
+    width: 33.333%;
+    text-align: center;
+}
+
 .play-round{
-    justify-content: space-around;
+    justify-content: center;
+    align-items: center;
     margin-bottom: 48px;
 }
 
 .round-result{
+    text-align: center;
+    width: 16%;
     margin-top: 48px;
 }
 
