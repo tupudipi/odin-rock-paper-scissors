@@ -1,0 +1,103 @@
+const buttons = Array.from(document.querySelectorAll(".player-buttons > *"));
+buttons.forEach(button => button.addEventListener('click', playRound));
+
+const playerPickTag = document.getElementsByClassName('player-pick')[0];
+const computerPickTag = document.getElementsByClassName('computer-pick')[0];
+const roundResultTag = document.getElementsByClassName('round-result')[0];
+const playerScoreTag = document.getElementById('player-score');
+const computerScoreTag = document.getElementById('computer-score');
+const restartTag = document.getElementsByClassName('restart')[0];
+let restartButton = document.createElement('button');
+
+function showRestartButton() {
+    restartButton.textContent = 'restart';
+    restartButton.className = 'restart-button';
+    restartButton.addEventListener('click', restartGame);
+    restartTag.appendChild(restartButton);
+}
+
+function restartGame(){
+    buttons.forEach(button => button.disabled = false);
+    playerPickTag.textContent = '-';
+    computerPickTag.textContent = '-';
+    roundResultTag.textContent = '';
+    playerScoreTag.textContent = '0';
+    computerScoreTag.textContent = '0';
+    restartTag.removeChild(restartButton);
+}
+
+function computerPlay() {
+    let array = ['rock', 'paper', 'scissors'];
+    let random = Math.floor(Math.random() * array.length);
+    return array[random];
+}
+
+function playerPlay(e) {
+    switch (e.target.id) {
+        case 'player-rock':
+            return 'rock';
+        case 'player-paper':
+            return 'paper';
+        case 'player-scissors':
+           return 'scissors';
+    }
+}
+
+function decideRound(player, computer){
+    switch(player){
+        case 'rock':
+             switch(computer){
+                case 'rock':
+                    return "It's a tie!";
+                case 'paper':
+                    computerScoreTag.textContent = Number(computerScoreTag.textContent) + 1;
+                    return "You lose this round!";
+                case 'scissors':
+                    playerScoreTag.textContent = Number(playerScoreTag.textContent) + 1;
+                    return "You win this round!";
+            }
+        case 'paper':
+            switch(computer){
+                case 'rock':
+                    playerScoreTag.textContent = Number(playerScoreTag.textContent) + 1;
+                    return "You win this round!";
+                case 'paper':
+                    return "It's a tie!";
+                case 'scissors':
+                    computerScoreTag.textContent = Number(computerScoreTag.textContent) + 1;
+                    return "You lose this round!";
+            }
+        case 'scissors':
+            switch(computer){
+                case 'rock':
+                    computerScoreTag.textContent = Number(computerScoreTag.textContent) + 1;
+                    return "You lose this round!";
+                case 'paper':
+                    playerScoreTag.textContent = Number(playerScoreTag.textContent) + 1;
+                    return "You win this round!";
+                case 'scissors':
+                    return "It's a tie!";
+            }
+    }
+}
+
+function playRound(e) {
+    let computerPick = computerPlay();
+    let playerPick = playerPlay(e);
+
+    playerPickTag.textContent = playerPick;
+    computerPickTag.textContent = computerPick;
+
+    roundResultTag.textContent = decideRound(playerPick, computerPick);
+
+    if(playerScoreTag.textContent == 5){
+        roundResultTag.textContent = "You won!";
+        buttons.forEach(button => button.disabled = true);
+        showRestartButton();
+    } 
+    else if (computerScoreTag.textContent == 5) {
+        roundResultTag.textContent = "You lost! :(";
+        buttons.forEach(button => button.disabled = true);
+        showRestartButton();
+    }
+}

@@ -10,128 +10,68 @@
 </head>
 
 <body>
-
-    <main>
-        <div class="buttons">
-            <h2>Player picks</h2>
-            <button id="rock">ROCK</button>
-            <button id="paper"=>PAPER</button>
-            <button id="scissors">SCISSORS</button>
-        </div>
-
-        <div class="score">
-            <h2>SCORE:</h2>
-            <p id="playerScore">Player: 0</p>
-            <p id="computerScore">Computer: 0</p>
-        </div>
-
-        <div class="computer-buttons">
-            <h2>Computer picks</h2>
-            <button id="rock" disabled>ROCK</button>
-            <button id="paper" disabled>PAPER</button>
-            <button id="scissors" disabled>SCISSORS</button>
-        </div>
-    </main>
-
-    <div class="round-results">
-            <p id="round-text">
-
-            </p>
+    <div class="title">
+        <h1>Rock Paper Scissors</h1>
     </div>
 
+    <h2>First to 5 wins! Ties don't count.</h2>
+    <main>
+        <div class="score">
+            <div class="player-score">
+                <h3>Player Score</h3>
+                <p id="player-score">0</p>
+            </div>
+            <div class="computer-score">
+                <h3>Computer Score</h3>
+                <p id="computer-score">0</p>
+            </div>
+        </div>
 
+        <div class="play-round">
+            <div class="player">
+                <p style="text-align: start; margin-left: 16px; margin-bottom: 4px;">Player</p>
+                <div class="player-buttons">
+                    <button id="player-rock">rock</button>
+                    <button id="player-paper">paper</button>
+                    <button id="player-scissors">scissors</button>
+                </div>
+            </div>
+
+            <div class="computer">
+                <p style="text-align: start; margin-left: 16px; margin-bottom: 4px;">Computer</p>
+                <div class="computer-buttons">
+                    <button id="computer-rock" disabled>rock</button>
+                    <button id="computer-paper" disabled>paper</button>
+                    <button id="computer-scissors" disabled>scissors</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="round-picks">
+            <div class="player-pick">
+                -
+            </div>
+
+            <div class="vs">
+                vs
+            </div>
+
+            <div class="computer-pick">
+                -
+            </div>
+        </div>
+
+        <div class="round-result">
+            -
+        </div>
+
+        <div class="restart">
+            
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
 </body>
-
-<script>
-    function computerPlay() {
-        let array = ['Rock', 'Paper', 'Scissors'];
-        let random = Math.floor(Math.random() * array.length);
-        return array[random];
-    }
-    let playerScore = 0, computerScore = 0;
-
-    function playRound(e) {
-        let computerSelection = computerPlay();
-        computerSelection = computerSelection.toLowerCase();
-
-        let playerSelection = e.target.id;
-
-        let p = document.getElementById("round-text");
-
-        if (playerSelection == "rock")
-            switch (computerSelection) {
-                case "rock":
-                    p.textContent = `You picked ${playerSelection}, computer picked ${computerSelection}
-                            It's a tie!`;
-                    break;
-                case "paper":
-                    computerScore++;
-                    p.textContent = `You picked ${playerSelection}, computer picked ${computerSelection}
-                            You lose this round!`;
-                    break;
-                case "scissors":
-                    playerScore++;
-                    p.textContent = `You picked ${playerSelection}, computer picked ${computerSelection}
-                            You win this round!`;
-                    break;
-            }
-        else if (playerSelection == "paper")
-            switch (computerSelection) {
-                case "rock":
-                    playerScore++;
-                    p.textContent = `You picked ${playerSelection}, computer picked ${computerSelection}
-                            You win this round!`;
-                    break;
-                case "paper":
-                    p.textContent = `You picked ${playerSelection}, computer picked ${computerSelection}
-                            It's a tie!`;
-                    break;
-                case "scissors":
-                    computerScore++;
-                    p.textContent = `You picked ${playerSelection}, computer picked ${computerSelection}
-                            You lose this round!`;
-                    break;
-            }
-        else if (playerSelection == "scissors")
-            switch (computerSelection) {
-                case "rock":
-                    computerScore++;
-                    p.textContent = `You picked ${playerSelection}, computer picked ${computerSelection}
-                            You lose this round!`;
-                    break;
-                case "paper":
-                    playerScore++;
-                    p.textContent = `You picked ${playerSelection}, computer picked ${computerSelection}
-                            You win this round!`;
-                    break;
-                case "scissors":
-                    p.textContent = `You picked ${playerSelection}, computer picked ${computerSelection}
-                            It's a tie!`;
-                    break;
-            }
-        const results = document.querySelector(".round-results");
-        results.appendChild(p);
-
-        document.getElementById("playerScore").innerHTML = `Player: ${playerScore}`;
-        document.getElementById("computerScore").innerHTML = `Computer: ${computerScore}`;
-
-        let pWon = document.createElement("h1");
-        let computerWon = document.createElement("h1");
-
-        if(playerScore == 5)
-        {
-            pWon.textContent = "WOOOOOO YOU WON!"
-            results.replaceChild(pWon, p);
-        }
-        if(computerScore == 5)
-        {
-            computerWon.textContent = "Oof, you lost. Better luck next time!"
-            results.replaceChild(computerWon, p);
-        }
-    }
-
-    const buttons = Array.from(document.querySelectorAll("button"));
-    buttons.forEach(button => button.addEventListener('click', playRound));
-</script>
 
 </html>
