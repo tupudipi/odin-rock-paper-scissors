@@ -14,14 +14,13 @@ function showRestartButton() {
     restartButton.className = 'restart-button';
     restartButton.addEventListener('click', restartGame);
     restartTag.appendChild(restartButton);
+    allButtons.forEach(button => button.classList = '');
+    playerPickTag.textContent = '-';
+    computerPickTag.textContent = '-';
 }
 
 function restartGame(){
     playerButtons.forEach(button => button.disabled = false);
-    allButtons.forEach(button => button.classList = '');
-    playerPickTag.textContent = '-';
-    computerPickTag.textContent = '-';
-    roundResultTag.textContent = '';
     playerScoreTag.textContent = '0';
     computerScoreTag.textContent = '0';
     restartTag.removeChild(restartButton);
